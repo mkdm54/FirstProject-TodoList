@@ -33,11 +33,11 @@ class TaskController extends Controller
             'todo_tasks' => 'required|string|min:3|max:255',
         ]);
 
-        Task::created([
+        Task::create([
             'todo_tasks' => $request->todo_tasks,
         ]);
 
-        return redirect()->route('/tasks')->with('success', 'Tasks berhasil ditambahkan');
+        return redirect()->route('index')->with('success', 'Tasks berhasil ditambahkan');
     }
 
     /**
