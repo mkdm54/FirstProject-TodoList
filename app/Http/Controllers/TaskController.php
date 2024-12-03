@@ -53,7 +53,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('editData.edit', compact('task'));
     }
 
     /**
@@ -61,7 +61,15 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+            'todo_tasks' => 'required|string|min:5|max:255',
+        ]);
+
+        $task->update([
+            'todo_tasks' =>$request->todo_tasks,
+        ]);
+
+        return redirect('index')->with('succes', 'Data berhasil diperbarui');
     }
 
     /**
