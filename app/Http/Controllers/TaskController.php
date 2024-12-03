@@ -29,7 +29,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'todo_tasks' => 'required|string|min:3|max:255',
+        ]);
+
+        Task::created([
+            'todo_tasks' => $request->todo_tasks,
+        ]);
+
+        return redirect()->route('/tasks')->with('success', 'Tasks berhasil ditambahkan');
     }
 
     /**
