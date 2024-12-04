@@ -28,15 +28,17 @@
             </div>
         </form>
         <ul class="divide-y divide-gray-200 px-4">
+            @foreach ($tasks as $index => $item)
             <li class="py-4">
                 <div class="flex items-center">
-                    @foreach ($tasks as $item)
+                    
                         <label for="todo1" class="ml-3 block text-gray-900">
-                            <span class="text-lg font-medium">{{ $item->todo_tasks }}</span>
+                            <span class="text-lg font-medium">{{ $index + 1 }}. {{ $item->todo_tasks }}</span>
                         </label>
-                    @endforeach
+                    
                 </div>
             </li>
+            @endforeach
         </ul>
     </div>
 </body>
