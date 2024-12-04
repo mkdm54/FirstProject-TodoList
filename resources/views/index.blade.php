@@ -34,7 +34,6 @@
                         class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
                     <label for="todo1" class="ml-3 block text-gray-900">
                         <span class="text-lg font-medium">Finish project proposal</span>
-                        <span class="text-sm font-light text-gray-500">Due on 4/1/23</span>
                     </label>
                 </div>
             </li>
