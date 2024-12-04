@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class TaskController extends Controller
 {
@@ -45,7 +46,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        
     }
 
     /**
@@ -69,7 +70,7 @@ class TaskController extends Controller
             'todo_tasks' =>$request->todo_tasks,
         ]);
 
-        return redirect('index')->with('succes', 'Data berhasil diperbarui');
+        return redirect('index')->with('success', 'Data berhasil diperbarui');
     }
 
     /**
@@ -77,6 +78,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('index')->with('success', 'Task berhasil dihapus');
     }
 }
