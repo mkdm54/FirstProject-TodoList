@@ -30,11 +30,11 @@
         <ul class="divide-y divide-gray-200 px-4">
             <li class="py-4">
                 <div class="flex items-center">
-                    <input id="todo1" name="todo1" type="checkbox"
-                        class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
-                    <label for="todo1" class="ml-3 block text-gray-900">
-                        <span class="text-lg font-medium">Finish project proposal</span>
-                    </label>
+                    @foreach ($tasks as $item)
+                        <label for="todo1" class="ml-3 block text-gray-900">
+                            <span class="text-lg font-medium">{{ $item->todo_tasks }}</span>
+                        </label>
+                    @endforeach
                 </div>
             </li>
         </ul>
