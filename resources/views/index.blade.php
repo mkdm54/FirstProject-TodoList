@@ -6,7 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
     <title>Document</title>
+
+    <style>
+
+        .icon-container{
+            display: flex;
+            gap: 8%;
+        }
+        .icon {
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .pencil-icon {
+            margin-left: auto;
+            background-color: rgb(20, 184, 166);
+        }
+
+        .trash-icon {
+            background-color: rgb(224, 2, 2);
+        }
+
+        #list-data {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,15 +59,26 @@
         </form>
         <ul class="divide-y divide-gray-200 px-4">
             @foreach ($tasks as $index => $item)
-            <li class="py-4">
-                <div class="flex items-center">
-                    
+                <li class="py-4">
+                    <div id="list-data" class="flex items-center">
+
                         <label for="todo1" class="ml-3 block text-gray-900">
                             <span class="text-lg font-medium">{{ $index + 1 }}. {{ $item->todo_tasks }}</span>
                         </label>
-                    
-                </div>
-            </li>
+                        <div class="icon-container">
+                            <div class="icon pencil-icon">
+                                <a href="{{ route('tasks.edit', $item->id) }}"><i class="bi bi-pencil-fill"></i></a>
+                            </div>
+                            <form action="{{ route('tasks.destroy', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="icon trash-icon">
+                                    <button type="submit"><i class="bi bi-trash-fill"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
             @endforeach
         </ul>
     </div>
