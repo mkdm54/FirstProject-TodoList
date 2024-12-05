@@ -58,12 +58,12 @@
             </div>
         </form>
         <ul class="divide-y divide-gray-200 px-4">
-            @foreach ($tasks as $index => $item)
+            @foreach ($tasks as $item)
                 <li class="py-4">
                     <div id="list-data" class="flex items-center">
 
                         <label for="todo1" class="ml-3 block text-gray-900">
-                            <span class="text-lg font-medium">{{ $index + 1 }}. {{ $item->todo_tasks }}</span>
+                            <span class="text-lg font-medium">{{ $loop->iteration }}. {{ $item->todo_tasks }}</span>
                         </label>
                         <div class="icon-container">
                             <div class="icon pencil-icon">

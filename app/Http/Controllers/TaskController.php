@@ -70,7 +70,7 @@ class TaskController extends Controller
             'todo_tasks' =>$request->todo_tasks,
         ]);
 
-        return redirect('index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('index')->with('success', 'Data berhasil diperbarui');
     }
 
     /**
