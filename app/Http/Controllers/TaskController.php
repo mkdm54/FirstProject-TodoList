@@ -44,10 +44,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
-    {
-        
-    }
+    public function show(Task $task) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -67,7 +64,7 @@ class TaskController extends Controller
         ]);
 
         $task->update([
-            'todo_tasks' =>$request->todo_tasks,
+            'todo_tasks' => $request->todo_tasks,
         ]);
 
         return redirect()->route('index')->with('success', 'Data berhasil diperbarui');
@@ -78,7 +75,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        $task->delete();
-        return redirect()->route('index')->with('success', 'Task berhasil dihapus');
+        try {
+            $task->delete();
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            // Jika terjadi kesalahan, mengirimkan response JSON dengan status error
+            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menghapus tugas.']);
+        }
     }
 }
