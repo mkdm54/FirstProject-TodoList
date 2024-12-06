@@ -1,6 +1,7 @@
-function deleteTask(taskId) {
+// Definisikan fungsi di scope global
+window.deleteTask = function (taskId) {
     if (confirm("Apakah Anda yakin ingin menghapus tugas ini?")) {
-        const csrfToken = '{{ csrf_token() }}';
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         fetch(`/tasks/${taskId}`, {
             method: 'DELETE',
@@ -11,7 +12,11 @@ function deleteTask(taskId) {
         }).then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Mengarahkan ke halaman utama
+                    // Hapus tugas dari daftar
+                    const taskItem = document.getElementById(`task-${taskId}`);
+                    if (taskItem) {
+                        taskItem.remove();
+                    }
                     window.location.href = '/';
                 } else {
                     alert('Terjadi kesalahan saat menghapus tugas.');
