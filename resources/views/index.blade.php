@@ -60,7 +60,6 @@
             @foreach ($tasks as $item)
                 <li class="py-4">
                     <div id="list-data" class="flex items-center">
-
                         <label for="todo1" class="ml-3 block text-gray-900">
                             <span class="text-lg font-medium">{{ $loop->iteration }}. {{ $item->todo_tasks }}</span>
                         </label>
