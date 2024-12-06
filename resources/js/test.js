@@ -1,0 +1,1 @@
+console.log('berhasil di compile');

@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/test.js'])
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
     <title>Document</title>
 
     <style>
-
-        .icon-container{
+        .icon-container {
             display: flex;
             gap: 8%;
         }
@@ -69,13 +68,11 @@
                             <div class="icon pencil-icon">
                                 <a href="{{ route('tasks.edit', $item->id) }}"><i class="bi bi-pencil-fill"></i></a>
                             </div>
-                            <form action="{{ route('tasks.destroy', $item->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <div class="icon trash-icon">
-                                    <button type="submit"><i class="bi bi-trash-fill"></i></button>
-                                </div>
-                            </form>
+                            <div class="icon trash-icon">
+                                <button type="button" onclick="deleteTask({{ $item->id }})">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </li>
