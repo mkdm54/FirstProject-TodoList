@@ -49,9 +49,13 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit($id)
     {
-        return view('editData.edit', compact('task'));
+        $data = Task::find($id);
+        if(!$data){
+            return redirect()->route('index.index')->with('error', 'tugas tidak ditemukan');
+        }
+        return view('editData.edit', compact('data'));
     }
 
     /**
