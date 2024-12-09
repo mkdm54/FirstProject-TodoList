@@ -45,7 +45,7 @@
         <div class="px-4 py-2">
             <h1 class="text-gray-800 font-bold text-2xl uppercase">To-Do List</h1>
         </div>
-        <form class="w-full max-w-sm mx-auto px-4 py-2" action="{{ route('index.store') }}" method="POST">
+        <form class="w-full max-w-sm mx-auto px-4 py-2" action="{{ route('tasks.store') }}" method="POST">
             @csrf
             <div class="flex items-center border-b-2 border-teal-500 py-2">
                 <input
@@ -67,7 +67,7 @@
                         </h2>
                         <div class="icon-container">
                             <div class="icon pencil-icon">
-                                <a href="{{ route('index.edit', ['index' => $item->id]) }}"><i class="bi bi-pencil-fill"></i></a>
+                                <a href="{{ route('tasks.edit', ['task' => $item->id]) }}"><i class="bi bi-pencil-fill"></i></a>
                             </div>
                             <div class="icon trash-icon">
                                 <button type="button" onclick="deleteTask({{ $item->id }})">
