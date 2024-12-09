@@ -15,11 +15,6 @@ window.deleteTask = function (taskId) {
             return response.json();
         }).then(data => {
             if (data.success) {
-                // Hapus tugas dari daftar
-                const taskItem = document.getElementById(`task-${taskId}`);
-                if (taskItem) {
-                    taskItem.remove();
-                }
                 window.location.href = '/';
             } else {
                 alert('Terjadi kesalahan saat menghapus tugas.');
