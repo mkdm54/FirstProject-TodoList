@@ -38,7 +38,7 @@ class TaskController extends Controller
             'todo_tasks' => $request->todo_tasks,
         ]);
 
-        return redirect()->route('index.index')->with('success', 'Tasks berhasil ditambahkan');
+        return redirect()->route('tasks.index')->with('success', 'Tasks berhasil ditambahkan');
     }
 
     /**
@@ -49,13 +49,12 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
-        $data = Task::find($id);
-        if(!$data){
-            return redirect()->route('index.index')->with('error', 'tugas tidak ditemukan');
+        if (!$task) {
+            return redirect()->route('tasks.index')->with('error', 'Tugas tidak ditemukan');
         }
-        return view('editData.edit', compact('data'));
+        return view('editData.edit', compact('task'));
     }
 
     /**
@@ -71,7 +70,7 @@ class TaskController extends Controller
             'todo_tasks' => $request->todo_tasks,
         ]);
 
-        return redirect()->route('index.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('tasks.index')->with('success', 'Data berhasil diperbarui');
     }
 
     /**
