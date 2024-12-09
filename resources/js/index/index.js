@@ -1,6 +1,7 @@
 window.deleteTask = function (taskId) {
     if (confirm("Apakah Anda yakin ingin menghapus tugas ini?")) {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const errorMessage = document.getElementById('error-alert-message');
 
         fetch(`/tasks/${taskId}`, {
             method: 'DELETE',
@@ -17,7 +18,8 @@ window.deleteTask = function (taskId) {
             if (data.success) {
                 window.location.href = '/';
             } else {
-                alert('Terjadi kesalahan saat menghapus tugas.');
+                errorMessage.classList.remove('hidden');
+                errorMessage.innerHTML = data.message;
             }
         }).catch(error => {
             console.error('Error:', error);
