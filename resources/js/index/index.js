@@ -1,24 +1,27 @@
-function deleteTask(taskId) {
+window.deleteTask = function (taskId) {
     if (confirm("Apakah Anda yakin ingin menghapus tugas ini?")) {
-        const csrfToken = '{{ csrf_token() }}';
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         fetch(`/tasks/${taskId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
+                'X-CSRF-TOKEN': csrfToken // Menyertakan token CSRF di header
             }
-        }).then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Mengarahkan ke halaman utama
-                    window.location.href = '/';
-                } else {
-                    alert('Terjadi kesalahan saat menghapus tugas.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+            if (data.success) {
+                window.location.href = '/';
+            } else {
                 alert('Terjadi kesalahan saat menghapus tugas.');
-            });
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat menghapus tugas.');
+        });
     }
 }

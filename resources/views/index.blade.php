@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/index/index.js'])
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
@@ -15,6 +16,7 @@
             display: flex;
             gap: 8%;
         }
+
         .icon {
             color: white;
             padding: 10px;
@@ -60,9 +62,9 @@
             @foreach ($tasks as $item)
                 <li class="py-4">
                     <div id="list-data" class="flex items-center">
-                        <label for="todo1" class="ml-3 block text-gray-900">
+                        <h2 class="ml-3 block text-gray-900">
                             <span class="text-lg font-medium">{{ $loop->iteration }}. {{ $item->todo_tasks }}</span>
-                        </label>
+                        </h2>
                         <div class="icon-container">
                             <div class="icon pencil-icon">
                                 <a href="{{ route('tasks.edit', $item->id) }}"><i class="bi bi-pencil-fill"></i></a>
