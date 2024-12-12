@@ -2,7 +2,9 @@ window.deleteTask = function (taskId) {
     if (confirm("Apakah Anda yakin ingin menghapus tugas ini?")) {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const errorMessage = document.getElementById('error-alert-message');
-
+        const successMessage = document.getElementById('success-alert-message');
+        const successMessageContainer = document.getElementById('successMessageContainer');
+        const errorMessageContainer = document.getElementById('errorMessageContainer');
         fetch(`/tasks/${taskId}`, {
             method: 'DELETE',
             headers: {
@@ -16,9 +18,13 @@ window.deleteTask = function (taskId) {
             return response.json();
         }).then(data => {
             if (data.success) {
-                window.location.href = '/';
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+                successMessageContainer.classList.remove('hidden');
+                successMessage.innerHTML = data.message;
             } else {
-                errorMessage.classList.remove('hidden');
+                errorMessageContainer.classList.remove('hidden');
                 errorMessage.innerHTML = data.message;
             }
         }).catch(error => {
