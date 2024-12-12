@@ -80,7 +80,7 @@ class TaskController extends Controller
     {
         try {
             $task->delete();
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Tugas berhasil dihapus.']);
         } catch (\Throwable $th) {
             // Jika terjadi kesalahan, mengirimkan response JSON dengan status error
             return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menghapus tugas.']);
