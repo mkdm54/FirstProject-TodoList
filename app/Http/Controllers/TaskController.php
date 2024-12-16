@@ -30,16 +30,25 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
-            'todo_tasks' => 'required|string|min:3|max:255',
+            'todo_tasks' => 'required|string|min:3|max:255|unique:tasks,todo_tasks',
         ]);
 
-        Task::create([
-            'todo_tasks' => $request->todo_tasks,
-        ]);
+        try {
+            // Proses penyimpanan data
+            Task::create([
+                'todo_tasks' => $request->todo_tasks,
+            ]);
 
-        return redirect()->route('tasks.index')->with('success', 'Tasks berhasil ditambahkan');
+            // Jika berhasil, kembalikan respons sukses dalam format JSON
+            return response()->json(['success' => true, 'message' => 'Data berhasil ditambahkan'], 200);
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kembalikan respons dengan error
+            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan, gagal menambahkan data.'], 500);
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -80,10 +89,10 @@ class TaskController extends Controller
     {
         try {
             $task->delete();
-            return response()->json(['success' => true, 'message' => 'Tugas berhasil dihapus.']);
+            return response()->json(['success' => true, 'message' => 'Tugas berhasil dihapus.'], 200);
         } catch (\Throwable $th) {
             // Jika terjadi kesalahan, mengirimkan response JSON dengan status error
-            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menghapus tugas.']);
+            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menghapus tugas.'], 500);
         }
     }
 }
