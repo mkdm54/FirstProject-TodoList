@@ -4,61 +4,53 @@ const successMessageContainer = document.getElementById('successMessageContainer
 const errorMessageContainer = document.getElementById('errorMessageContainer');
 
 // Fungsi Tambah Tugas
-window.formAddData = function () {
-    const formInputData = document.getElementById('form-input-data');
+document.getElementById('form-input-data').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-    if (formInputData) {
-        formInputData.addEventListener('submit', function (event) {
-            event.preventDefault();
+    const inputElement = document.getElementById('input-data');
+    const inputData = inputElement.value.trim();
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            const inputElement = document.getElementById('input-data');
-            const inputData = inputElement.value.trim();
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            // Validasi input kosong
-            if (!inputData) {
-                errorMessageContainer.classList.remove('hidden');
-                errorMessage.innerHTML = 'Tugas tidak boleh kosong.';
-                return;
-            }
-
-            // Fetch untuk mengirim data ke server
-            fetch('/tasks', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                body: JSON.stringify({ 'todo_tasks': inputData }) // Pastikan key sesuai dengan backend
-            }).then(response => {
-                console.log(response);
-                if (!response.ok) {
-                    throw new Error(`Failed to submit data: ${response.statusText}`);
-                }
-                return response.json();
-            }).then(data => {
-                console.log(data);
-                if (data.success) {
-                    // Reset input
-                    inputElement.value = '';
-                    successMessageContainer.classList.remove('hidden');
-                    successMessage.innerHTML = data.message;
-
-                    // Redirect setelah 1 detik
-                    setTimeout(() => {
-                        window.location.href = '/';
-                    }, 1000);
-                } else {
-                    errorMessageContainer.classList.remove('hidden');
-                    errorMessage.innerHTML = data.message;
-                }
-            }).catch(error => {
-                console.error(`Error: ${error.message}`);
-                alert('Terjadi kesalahan saat menambahkan tugas. Silakan coba lagi.');
-            });
-        });
+    if (!inputData) {
+        errorMessageContainer.classList.remove('hidden');
+        errorMessage.innerHTML = 'Tugas tidak boleh kosong.';
+        return;
     }
-};
+
+    // Fetch untuk mengirim data ke server
+    fetch('tasks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({ 'todo_tasks': inputData }) // Pastikan key sesuai dengan backend
+    }).then(response => {
+        console.log(response);
+        if (!response.ok) {
+            throw new Error(`Failed to submit data: ${response.statusText}`);
+        }
+        return response.json();
+    }).then(data => {
+        if (data.success) {
+            // Reset input
+            inputElement.value = '';
+            successMessageContainer.classList.remove('hidden');
+            successMessage.innerHTML = data.message;
+
+            // Redirect setelah 1 detik
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        } else {
+            errorMessageContainer.classList.remove('hidden');
+            errorMessage.innerHTML = data.message;
+        }
+    }).catch(error => {
+        console.error(`${error}`);
+        alert(error);
+    });
+});
 
 // Fungsi Hapus Tugas
 window.deleteTask = function (taskId) {
@@ -108,4 +100,4 @@ function hideMessages() {
 }
 
 // Jalankan hideMessages pada load awal
-document.addEventListener('DOMContentLoaded', hideMessages);
+document.addEventListener('DOMContentLoaded', hideMessages());
