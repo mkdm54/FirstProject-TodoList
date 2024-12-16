@@ -20,7 +20,7 @@ window.deleteTask = function (taskId) {
             if (data.success) {
                 setTimeout(() => {
                     window.location.href = '/';
-                }, 2000);
+                }, 1000);
                 successMessageContainer.classList.remove('hidden');
                 successMessage.innerHTML = data.message;
             } else {
